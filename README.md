@@ -44,4 +44,5 @@ Now, this step is much easier with eksctl so i choose to use that approach.<br /
 
 ## Demo
 
+https://user-images.githubusercontent.com/64362937/141667417-4c643bf5-1b55-4ab7-bc63-848bf1a1c433.mp4
 
