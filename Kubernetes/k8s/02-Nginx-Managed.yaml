@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-managed # name use in podAntiAffinity
+  name: nginx-managed
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-managed # connect key to metad aname for podAntiAffinity
+      app: nginx-managed
   template:
     metadata:
       labels:
@@ -24,7 +24,6 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-                # node must have tags with key and values (when create nodegroup)
               - key: role
                 operator: In
                 values:
