@@ -1,56 +1,47 @@
 # AWS-EKS-Cluster
-
-This repository comes to demonstrate how to create cluster & node group with AWS EKS via terraform.<br />
-With terraform we can create network resources and assign it to the cluster in one place.<br />
-
-## Summary
-
-### Network
-1. Dedicated VPC
-2. 2 public subnets
-3. 2 private subnets
-4. 2 availability zones (Public & Private in each az)
-5. Igw & Nat (for later use)
-6. Route Tables
-7. Route Table Association
-
-### IAM Role & Policies
-1. Cluster Role - Let EKS permission to create/use aws resources by cluster.
-2. Policy - [AmazonEKSClusterPolicy](https://github.com/SummitRoute/aws_managed_policies/blob/master/policies/AmazonEKSClusterPolicy)
-
-1. Node Group Role - Let EC2 permission to create/use aws resources by instances.
-2. Policy - [AmazonEKSWorkerNodePolicy](https://github.com/SummitRoute/aws_managed_policies/blob/master/policies/AmazonEKSWorkerNodePolicy)
-3. Policy - [AmazonEKS_CNI_Policy](https://github.com/SummitRoute/aws_managed_policies/blob/master/policies/AmazonEKS_CNI_Policy)
-4. Policy - [AmazonEC2ContainerRegistryReadOnly](https://github.com/SummitRoute/aws_managed_policies/blob/master/policies/AmazonEC2ContainerRegistryReadOnly)
-
-### Cluser & Nodegroup
-1. Cluster on dedicated VPC & subnets.
-2. Worker nodes on private subnets.
-3. Scaling configuration - desired size = 2, max size = 10, min_size = 1.
-4. Instances type - spot instances t3.small
-
+Example of how to create EKS Cluster via Terraform & Auto Scale Nodes.
 
 ## Quick Start
 
-### 01. Export your aws access key & secret key 
-(Make sure the user have premission to creating resources).
+### Prerequests
+* Terraform 	v1.0.7
+* aws-cli 	2.2.21 
+* kubectl 	v1.22.3
+* eksctl 	0.68.0
+* Make sure you have administrator premission to creating resources.
+
+### 01. Configure your aws credentials at ~/.aws/credentials
 ```bash
-export AWS_ACCESS_KEY=""
-export AWS_SECRET_KEY=""
+[default]
+aws_access_key_id = ""
+aws_secret_access_key = ""
 ```
 
-### 02. Clone repository and run terraform as follow 
-(Make sure you have terraform install).
+### 02. Clone repository & Deploy Cluster
 ```bash
 git clone https://github.com/matanelg/AWS-EKS-Cluster.git
-cd AWS-EKS-Cluster
+cd AWS-EKS-Cluster/Terraform
 terraform init
 rettafom plan
 terraform apply -auto-approve
 ```
 
+### 03. Set Up & Deploy Autoscaler
+```bash
+cd ../Kubernetes
+bash oidc-autoscale-role.sh
+```
 
+## Summary
+With terraform we create network resources and assign it to EKS cluster that also created by terraform.<br />
+The next step is to create OIDC Provider & IAM Role for Kubernetes Service Account.<br />
+Now, this step is much easier with eksctl so i choose to use that approach.<br />
 
+* Note: 
+  * You should probably want to stick to one IAC for each of your infrastructure deployments, it easier for maintenance.
+  * Check Out [this repository](https://github.com/matanelg/EKS-ALB-Ingress-Controller) for create OIDC & Web Identity Role using terraform only.
+  * Check Out code remarks for more specificies info.
 
+## Demo
 
 
