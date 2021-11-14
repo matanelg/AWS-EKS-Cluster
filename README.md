@@ -40,7 +40,7 @@ Now, this step is much easier with eksctl so i choose to use that approach.<br /
 * Note: 
   * You should probably want to stick to one IAC for each of your infrastructure deployments, it easier for maintenance.
   * Check Out [this repository](https://github.com/matanelg/EKS-ALB-Ingress-Controller) for create OIDC & Web Identity Role using terraform only.
-  * Check Out code remarks for more specificies info.
+  * Check Out code remarks for more specificie info.
 
 ## Demo
 
